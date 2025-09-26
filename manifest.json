@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Google AI Killer",
+  "version": "1.2",
+  "description": "Google検索のAIによる概要とAIモードを非表示にします。",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.google.co.jp/*",
+        "https://www.google.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "style.css"
+      ]
+    }
+  ]
+}
