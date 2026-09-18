@@ -17,7 +17,8 @@
     // 描画されないよう、JSの実行と同時に<style>を先頭に挿入しておく。
     // manifest.json側のcssとは別に、JS側でも二重に非表示を掛けている。
     const css = `
-        div.bzXtMb.M8OgIe.dRpWwb {
+        div.bzXtMb.M8OgIe.dRpWwb,
+        [jsname="dEwkXc"] {
             display: none !important;
         }
     `;
@@ -52,10 +53,13 @@
     const removeAI = () => {
         // 「AIによる概要」本体を削除
         // ・div.bzXtMb.M8OgIe.dRpWwb : 旧来のクラス名ベースのセレクタ
-        // ・[data-attnms="ec"]      : AI概要ブロック全体を囲む属性（クラス名より変更されにくい）
-        // Googleのクラス名は難読化されており変わりやすいため、両方を対象にして冗長化している。
+        // ・[data-attnms="ec"]      : AI概要ブロックを囲む属性（値は生成状態により変動する。"ec"は成功時）
+        // ・[jsname="dEwkXc"]       : AI概要スロットそのものを表す識別子。data-attnmsの値（ec/d等）や
+        //                             生成中・生成失敗・成功のどの状態でも共通して付与されているため、
+        //                             実質的にこれが一番信頼できる。
+        // Googleのクラス名・属性値は難読化されており変わりやすいため、複数を対象にして冗長化している。
         document
-            .querySelectorAll('div.bzXtMb.M8OgIe.dRpWwb, [data-attnms="ec"]')
+            .querySelectorAll('div.bzXtMb.M8OgIe.dRpWwb, [data-attnms="ec"], [jsname="dEwkXc"]')
             .forEach(el => el.remove());
 
         removeAIModeTab();
