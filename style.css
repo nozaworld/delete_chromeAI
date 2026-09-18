@@ -1,5 +1,14 @@
 @charset "utf-8";
 
+/* 「AIによる概要」ブロック全体を囲む属性セレクタ。
+   Googleのクラス名は難読化・頻繁に変更されるため、
+   比較的変わりにくいこの属性をメインの非表示対象にしている。 */
+[data-attnms="ec"] {
+  display: none !important;
+}
+
+/* 過去に確認できていた非表示対象（要因不明のためクラス名は残すが、
+   現行のDOM構造では該当なし。将来的に復活する可能性があるため保持）。 */
 div[data-mcpr],
 .cUnQKe {
   display: none !important;
@@ -7,4 +16,16 @@ div[data-mcpr],
 
 .hide-ai-mode {
   display: none !important;
+}
+
+/* Geminiアイコンとそのコンテナを非表示 */
+#WWNEkf,
+.a-OkO9ve-Qs0SX,
+[aria-label*="Gemini"],
+[data-tooltip*="Gemini"] {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
 }
