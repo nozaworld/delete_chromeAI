@@ -30,7 +30,26 @@
     (document.head || document.documentElement).appendChild(style);
 
     // 検索結果上部のタブ一覧（すべて／画像／動画…）から「AI モード」の項目を削除
+    // クラス名は難読化されて変わりやすいため，リンク先のudm=50（AIモード）を基準に探す。
     const removeAIModeTab = () => {
+        document
+            .querySelectorAll('a[href*="udm=50"]')
+            .forEach(a => {
+                // 検索結果本文のリンクを誤って消さないよう，テキストが「AIモード」で始まるものに限定
+                if (!a.textContent.replace(/\s+/g, '').startsWith('AIモード')) return;
+
+                // 画像／ショッピングなど他のタブを含む親に到達する直前の要素を，タブ項目として削除する
+                let item = a;
+                while (
+                    item.parentElement &&
+                    !item.parentElement.querySelector('a[href*="udm=2"], a[href*="udm=28"], a[href*="udm=vids"]')
+                ) {
+                    item = item.parentElement;
+                }
+                item.remove();
+            });
+
+        // 従来のクラス名ベースの削除（互換性のため残す）
         document
             .querySelectorAll('div.beZ0tf.O1uzAe')
             .forEach(parent => {
